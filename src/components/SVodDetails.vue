@@ -108,7 +108,6 @@ export default {
   methods: {
     episodeSelected(episode) {
       if (this.selectedEpisode !== episode) {
-        console.log('selected', episode);
         this.selectedEpisode = episode;
         this.selectedEpisodeMediaFetching = true;
         this.selectedEpisodeMedia = null;
@@ -122,7 +121,6 @@ export default {
       this.isSingleEpisodeItem = contentInfoIds.length === 1;
       this.episodes = episodes;
       this.episodesFetching = false;
-      console.log('fetched episodes', this.episodes);
       this.episodeSelected(this.episodes[0]);
     },
   },
