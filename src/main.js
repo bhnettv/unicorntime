@@ -9,10 +9,15 @@ import PortalVue from 'portal-vue';
 import VueSidebarMenu from 'vue-sidebar-menu';
 import 'vue-sidebar-menu/dist/vue-sidebar-menu.css';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCaretRight, faArrowLeft, faCog } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import {
+  faCaretRight,
+  faArrowLeft,
+  faCog,
+  faStar,
+} from '@fortawesome/free-solid-svg-icons';
 
 import App from './App.vue';
 import router from './router';
@@ -35,6 +40,7 @@ Vue.component('v-select', vSelect);
 library.add(faCaretRight);
 library.add(faArrowLeft);
 library.add(faCog);
+library.add(faStar);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 const player = async (src) => {

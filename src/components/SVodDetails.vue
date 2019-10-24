@@ -1,81 +1,90 @@
+<!-- eslint-disable -->
 <template>
   <div class="vod">
-    <div class="col">
-      <button class="button fab back-button" @click="back">
-        <font-awesome-icon icon="arrow-left" />
-      </button>
-      <div>
-        <img :src="imageUrl">
+    <div class="background"
+      :style="{backgroundImage: background, animationPlayState: backgroundFade}"></div>
+    <div class="content">
+      <div class="col">
+        <button class="button fab back-button" @click="back">
+          <font-awesome-icon icon="arrow-left" />
+        </button>
+        <div class="poster-container">
+          <img :src="imageUrl">
+          <span class="rating" v-show="movieDBInfo.rating > 0">
+            <font-awesome-icon icon="star" size="1x" color="#F9DF06"/>
+            <p>{{ movieDBInfo.rating }}/10</p>
+          </span>
+        </div>
+        <div class="info">
+          <h1>{{ item.movie.name }} ({{ item.movie.year }})</h1>
+
+          <p v-if="isSingleEpisodeItem && selectedEpisode">
+            {{ selectedEpisode.details.description }}
+          </p>
+
+          <portal
+            to="episodePortal"
+            :disabled="isSingleEpisodeItem">
+            <breeding-rhombus-spinner
+              :animation-duration="1000"
+              :size="30"
+              :color="'#ff1d5e'"
+              style="margin-top: 10px; margin-left: 10px;"
+              v-show="episodesFetching || selectedEpisodeMediaFetching"
+            />
+
+            <template v-if="selectedEpisodeMedia">
+              <div class="options">
+                <span>Хэл: </span>
+                <v-select
+                  :getOptionLabel="opt => opt.audios[0]"
+                  :options="selectedEpisodeMedia"
+                  v-model="selectedVariant"
+                  :clearable="false"
+                  @input="variantSelected"></v-select>
+
+                <span>Source: </span>
+                <v-select
+                  class="source-select"
+                  v-if="selectedVariant"
+                  :getOptionLabel="opt => opt.src.substring(0, 65) + (opt.src.length > 65 ? '...' : '')"
+                  :options="selectedVariant.mediaResources"
+                  v-model="selectedVariantResource"
+                  :clearable="false"></v-select>
+              </div>
+              <button class="button primary watch-button" @click="play">Watch</button>
+            </template>
+          </portal>
+        </div>
       </div>
-      <div class="info">
-        <h1>{{ item.movie.name }} ({{ item.movie.year }})</h1>
+      <div class="col episodes-container" v-if="!isSingleEpisodeItem">
+        <div>
+          <h1>Episodes</h1>
 
-        <p v-if="isSingleEpisodeItem && selectedEpisode">
-          {{ selectedEpisode.details.description }}
-        </p>
+          <ul class="episodes">
+            <li
+              v-bind:key="episode.id"
+              v-for="episode in episodes"
+              @click="episodeSelected(episode)"
+              :class="{ active: selectedEpisode === episode }">
+              {{ episode.title }}
+            </li>
+          </ul>
+        </div>
+        <div v-if="selectedEpisode">
+          <h1>Episode Info</h1>
 
-        <portal
-          to="episodePortal"
-          :disabled="isSingleEpisodeItem">
-          <breeding-rhombus-spinner
-            :animation-duration="1000"
-            :size="30"
-            :color="'#ff1d5e'"
-            style="margin-top: 10px; margin-left: 10px;"
-            v-show="episodesFetching || selectedEpisodeMediaFetching"
-          />
+          <portal-target name="episodePortal">
+          </portal-target>
 
-          <template v-if="selectedEpisodeMedia">
-            <div class="options">
-              <span>Хэл: </span>
-              <v-select
-                :getOptionLabel="opt => opt.audios[0]"
-                :options="selectedEpisodeMedia"
-                v-model="selectedVariant"
-                :clearable="false"
-                @input="variantSelected"></v-select>
-
-              <span>Source: </span>
-              <v-select
-                class="source-select"
-                v-if="selectedVariant"
-                :getOptionLabel="opt => opt.src"
-                :options="selectedVariant.mediaResources"
-                v-model="selectedVariantResource"
-                :clearable="false"></v-select>
-            </div>
-            <button class="button primary watch-button" @click="play">Watch</button>
-          </template>
-        </portal>
-      </div>
-    </div>
-    <div class="col episodes-container" v-if="!isSingleEpisodeItem">
-      <div>
-        <h1>Episodes</h1>
-
-        <ul class="episodes">
-          <li
-            v-bind:key="episode.id"
-            v-for="episode in episodes"
-            @click="episodeSelected(episode)"
-            :class="{ active: selectedEpisode === episode }">
-            {{ episode.title }}
-          </li>
-        </ul>
-      </div>
-      <div v-if="selectedEpisode">
-        <h1>Episode Info</h1>
-
-        <portal-target name="episodePortal">
-        </portal-target>
-
-        <h2>{{ selectedEpisode.title }}</h2>
-        <p>{{ selectedEpisode.details.description }} </p>
+          <h2>{{ selectedEpisode.title }}</h2>
+          <p>{{ selectedEpisode.details.description }} </p>
+        </div>
       </div>
     </div>
   </div>
 </template>
-
+<!--eslint-enable-->
 <script>
 import client from 'api-client';
 import { BreedingRhombusSpinner } from 'epic-spinners';
@@ -99,6 +108,7 @@ export default {
   methods: {
     episodeSelected(episode) {
       if (this.selectedEpisode !== episode) {
+        console.log('selected', episode);
         this.selectedEpisode = episode;
         this.selectedEpisodeMediaFetching = true;
         this.selectedEpisodeMedia = null;
@@ -112,6 +122,7 @@ export default {
       this.isSingleEpisodeItem = contentInfoIds.length === 1;
       this.episodes = episodes;
       this.episodesFetching = false;
+      console.log('fetched episodes', this.episodes);
       this.episodeSelected(this.episodes[0]);
     },
   },
@@ -127,6 +138,7 @@ export default {
     const item = this.$store.state.movies[this.id];
     if (item) {
       this.item = item;
+      this.fetchMovieDB(this.item.movie.name, this.item.movie.year);
       this.fetchEpisodes();
     } else {
       this.back();
@@ -158,10 +170,10 @@ export default {
   margin: 0;
 
   li {
-    background: rgba(143, 143, 143, 0.2);
+    background: rgba(0, 0, 0, 0.5);
     padding: 10px;
     cursor: pointer;
-    color: #afafaf;
+    color: #d3d3d3;
     border-bottom: 1px solid rgba(143, 143, 143, 0.5);
 
     &:hover {
@@ -170,7 +182,7 @@ export default {
 
     &.active {
       color: #ffffff;
-      background: rgb(40, 139, 45);
+      background: rgb(40, 175, 47);
     }
   }
 }
