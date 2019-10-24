@@ -105,8 +105,6 @@ const fetchMovies = async () => {
     item.poster = `http://10.200.0.41${item.poster}`;
   });
 
-  console.log(responseList[0]);
-
   return responseList;
 };
 
