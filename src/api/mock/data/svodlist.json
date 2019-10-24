@@ -1,0 +1,77 @@
+{
+    "data": [
+        {
+            "id": 1001,
+            "contentInfoIds": "33333301,33333302,33333303,33333304,33333305,33333306,33333307,33333308,33333309,33333310",
+            "name": "Game of Thrones Season 1",
+            "poster": "mock/1001.jpg",
+            "sre": "1",
+            "synopsis": null,
+            "year": 2011
+        },
+        {
+            "id": 1002,
+            "contentInfoIds": "33333301,33333302,33333303,33333304,33333305,33333306,33333307,33333308,33333309,33333310",
+            "name": "Game of Thrones Season 2",
+            "poster": "mock/1002.jpg",
+            "sre": "0",
+            "synopsis": null,
+            "year": 2012
+        },
+        {
+            "id": 1003,
+            "contentInfoIds": "33333301,33333302,33333303,33333304,33333305,33333306,33333307,33333308,33333309,33333310",
+            "name": "Game of Thrones Season 3",
+            "poster": "mock/1003.jpg",
+            "sre": "1",
+            "synopsis": null,
+            "year": 2013
+        },
+        {
+            "id": 1004,
+            "contentInfoIds": "33333301,33333302,33333303,33333304,33333305,33333306,33333307,33333308,33333309,33333310",
+            "name": "Game of Thrones Season 4",
+            "poster": "mock/1004.jpg",
+            "sre": "0",
+            "synopsis": null,
+            "year": 2014
+        },
+        {
+            "id": 1005,
+            "contentInfoIds": "33333301,33333302,33333303,33333304,33333305,33333306,33333307,33333308,33333309,33333310",
+            "name": "Game of Thrones Season 5",
+            "poster": "mock/1005.png",
+            "sre": "1",
+            "synopsis": null,
+            "year": 2016
+        },
+        {
+            "id": 1006,
+            "contentInfoIds": "33333301,33333302,33333303,33333304,33333305,33333306,33333307,33333308,33333309,33333310",
+            "name": "Game of Thrones Season 6",
+            "poster": "mock/1006.jpg",
+            "sre": "1",
+            "synopsis": null,
+            "year": 2016
+        },
+        {
+            "id": 1007,
+            "contentInfoIds": "33333301,33333302,33333303,33333304,33333305,33333306,33333307,33333308,33333309,33333310",
+            "name": "Game of Thrones Season 7",
+            "poster": "mock/1007.png",
+            "sre": "0",
+            "synopsis": null,
+            "year": 2017
+        },
+        {
+            "id": 1008,
+            "contentInfoIds": "33333301,33333302,33333303,33333304,33333305,33333306,33333307,33333308,33333309,33333310",
+            "name": "Game of Thrones Season 8",
+            "poster": "mock/1008.png",
+            "sre": "1",
+            "synopsis": null,
+            "year": 2019
+        }
+    ],
+    "state": "success"
+}
