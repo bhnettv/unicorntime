@@ -11,10 +11,7 @@ module.exports = {
   pluginOptions: {
     electronBuilder: {
       builderOptions: {
-        publish: {
-          provider: 's3',
-          bucket: 'unicorntime',
-        },
+        publish: ['github'],
       },
     },
   },
