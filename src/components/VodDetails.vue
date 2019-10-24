@@ -38,36 +38,12 @@
 </template>
 
 <script>
-import client from 'api-client';
+import BaseDetails from './BaseDetails.vue';
 
 export default {
   name: 'vod-details',
+  extends: BaseDetails,
   props: ['id'],
-  data() {
-    return {
-      item: {},
-      selectedVariant: null,
-      selectedVariantResource: null,
-    };
-  },
-  computed: {
-    imageUrl() {
-      return client.translateUrl(this.item.movie.poster);
-    },
-  },
-  methods: {
-    variantSelected(value) {
-      [this.selectedVariantResource] = value.mediaResources;
-    },
-    watch() {
-      if (this.selectedVariant && this.selectedVariantResource) {
-        this.$player(this.selectedVariantResource.src);
-      }
-    },
-    back() {
-      this.$router.go(-1);
-    },
-  },
   created() {
     const item = this.$store.state.movies[this.id];
     if (item) {
@@ -75,7 +51,7 @@ export default {
       [this.selectedVariant] = this.item.variants;
       [this.selectedVariantResource] = this.item.variants[0].mediaResources;
     } else {
-      this.$router.go(-1);
+      this.back();
     }
   },
 };

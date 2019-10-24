@@ -79,41 +79,24 @@
 <script>
 import client from 'api-client';
 import { BreedingRhombusSpinner } from 'epic-spinners';
+import BaseDetails from './BaseDetails.vue';
 
 export default {
   name: 'svod-details',
+  extends: BaseDetails,
   props: ['id'],
   components: { BreedingRhombusSpinner },
   data() {
     return {
-      item: {},
       isSingleEpisodeItem: true,
       episodes: [],
       episodesFetching: true,
       selectedEpisode: null,
       selectedEpisodeMedia: null,
       selectedEpisodeMediaFetching: true,
-      selectedVariant: null,
-      selectedVariantResource: null,
     };
   },
-  computed: {
-    imageUrl() {
-      return client.translateUrl(this.item.movie.poster);
-    },
-  },
   methods: {
-    variantSelected(value) {
-      [this.selectedVariantResource] = value.mediaResources;
-    },
-    watch() {
-      if (this.selectedVariant && this.selectedVariantResource) {
-        this.$player(this.selectedVariantResource.src);
-      }
-    },
-    back() {
-      this.$router.go(-1);
-    },
     episodeSelected(episode) {
       if (this.selectedEpisode !== episode) {
         this.selectedEpisode = episode;
@@ -146,7 +129,7 @@ export default {
       this.item = item;
       this.fetchEpisodes();
     } else {
-      this.$router.go(-1);
+      this.back();
     }
   },
 };
