@@ -1,0 +1,169 @@
+* {
+  font-family: FiraSans;
+  font-weight: 400;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: #1f1f1f;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: hsl(210, 29%, 24%);
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 30px;
+  color: rgb(80, 80, 80);
+  background: #B0B0B0;
+  background-image: linear-gradient(to bottom, #B0B0B0, #F2F2F2);
+  box-shadow: 1px 1px 20px 0px #000000;
+  text-shadow: 1px 1px 20px #000000;
+  border: solid #CFCFCF 1px;
+  border-radius: 0px;
+  outline: none;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 24px;
+
+  &:hover {
+    background: #D03434;
+    border-color: #D03434;
+    color: #ffffff;
+  }
+
+  &.primary {
+    color: #FFFFFF;
+    background: #3D94F6;
+    background-image: linear-gradient(to bottom, #3D94F6, #1E62D0);
+    border: solid #337FED 1px;
+
+    &:hover {
+      background: #1E62D0;
+      background-image: linear-gradient(to bottom, #1E62D0, #3D94F6);
+    }
+  }
+
+  &.fab {
+    border-radius: 100px;
+    padding: 10px;
+    font-size: 20px;
+    font-weight: 100;
+  }
+}
+
+.vod {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 250px;
+  color: #ffffff;
+
+  .col {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  .info {
+    margin-left: 30px;
+
+    h1 {
+      font-size: 60px;
+      font-weight: 300;
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  .options {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+
+    > span {
+      margin-right: 8px;
+    }
+  }
+
+  .v-select {
+    display: inline-block;
+    padding-right: 30px;
+
+    &.source-select {
+      flex: 1;
+      padding-right: 0;
+    }
+
+    .vs__dropdown-toggle {
+      border: 1px solid #9b9b9b;
+    }
+
+    .vs__selected {
+      color: #ffffff;
+    }
+
+    .vs__clear, .vs__open-indicator {
+      fill: #9b9b9b;
+    }
+  }
+
+  .back-button {
+    position: absolute;
+    left: -120px;
+    font-size: 30px!important;
+    padding: 20px!important;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 14px;
+  height: 18px;
+}
+::-webkit-scrollbar-thumb {
+  height: 6px;
+  border: 4px solid rgba(0, 0, 0, 0);
+  background-clip: padding-box;
+  border-radius: 7px;
+  background-color: rgba(75, 102, 255, 0.8);
+  box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(0, 0, 0, 0.05);
+}
+::-webkit-scrollbar-track {
+background: #1f1f1f;
+}
+::-webkit-scrollbar-button {
+  width: 0;
+  height: 0;
+  display: none;
+}
+::-webkit-scrollbar-corner {
+  background-color: transparent;
+}
+
+@font-face {
+font-family: 'FiraSans';
+src:  url('~@/assets/fonts/FiraSans-Regular.ttf');
+font-weight: 400;
+}
+
+@font-face {
+font-family: 'FiraSans';
+src:  url('~@/assets/fonts/FiraSans-Bold.ttf');
+font-weight: 500;
+}
+
+@font-face {
+font-family: 'FiraSans';
+src:  url('~@/assets/fonts/FiraSans-Light.ttf');
+font-weight: 300;
+}

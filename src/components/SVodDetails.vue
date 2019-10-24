@@ -1,8 +1,8 @@
 <template>
   <div class="vod">
-    <div class="col" style="position: relative;">
-      <button class="back-button" @click="back">
-        <font-awesome-icon icon="arrow-left" slot="dropdown-icon" />
+    <div class="col">
+      <button class="button fab back-button" @click="back">
+        <font-awesome-icon icon="arrow-left" />
       </button>
       <div>
         <img :src="imageUrl">
@@ -44,7 +44,7 @@
                 v-model="selectedVariantResource"
                 :clearable="false"></v-select>
             </div>
-            <button class="watch-button" @click="watch">Watch</button>
+            <button class="button primary watch-button" @click="play">Watch</button>
           </template>
         </portal>
       </div>

@@ -12,7 +12,7 @@
       />
     </div>
     <p class="app-version">{{ appVersion }}</p>
-    <button @click="openSettings" class="settings-modal-button">
+    <button class="button fab settings-button" @click="openSettings">
       <font-awesome-icon icon="cog" />
     </button>
     <modal
@@ -38,7 +38,7 @@
           @click="saveSettings">
           Save
         </button>
-      </div> <!---->
+      </div>
     </modal>
   </div>
 </template>
@@ -97,29 +97,6 @@ export default {
 </script>
 
 <style lang="scss">
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-* {
-  font-family: FiraSans;
-  font-weight: 400;
-}
-
-html, body {
-  margin: 0;
-  padding: 0;
-}
-
-body {
-  background: #1f1f1f;
-  user-select: none;
-}
-
 .loader {
   position: absolute;
   left: 0;
@@ -151,90 +128,14 @@ body {
   flex-direction: column;
 }
 
-.settings-modal-button {
-  position: fixed;
-  right: 10px;
-  bottom: 30px;
-  z-index: 10000;
-  outline: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #B0B0B0;
-  background-image: -webkit-linear-gradient(top, #B0B0B0, #F2F2F2);
-  background-image: -moz-linear-gradient(top, #B0B0B0, #F2F2F2);
-  background-image: -ms-linear-gradient(top, #B0B0B0, #F2F2F2);
-  background-image: -o-linear-gradient(top, #B0B0B0, #F2F2F2);
-  background-image: linear-gradient(to bottom, #B0B0B0, #F2F2F2);
-  -webkit-border-radius: 100px;
-  -moz-border-radius: 100px;
-  border-radius: 100px;
-  height: 40px;
-  line-height: 50px;
-  color: rgb(80, 80, 80);
-  font-family: Open Sans;
-  width: 40px;
-  font-size: 20px;
-  font-weight: 100;
-  box-shadow: 1px 1px 20px 0px #000000;
-  -webkit-box-shadow: 1px 1px 20px 0px #000000;
-  -moz-box-shadow: 1px 1px 20px 0px #000000;
-  text-shadow: 1px 1px 20px #000000;
-  border: solid #CFCFCF 1px;
-  text-decoration: none;
-  cursor: pointer;
-}
-
-.settings-modal-button:hover {
-  background: #D03434;
-  border-color: #D03434;
-  color: #ffffff;
-  text-decoration: none;
-}
-
 .v--modal-overlay {
   z-index: 10001 !important;
 }
 
-::-webkit-scrollbar {
-    width: 14px;
-    height: 18px;
-}
-::-webkit-scrollbar-thumb {
-    height: 6px;
-    border: 4px solid rgba(0, 0, 0, 0);
-    background-clip: padding-box;
-    border-radius: 7px;
-    background-color: rgba(75, 102, 255, 0.8);
-    box-shadow: inset -1px -1px 0px rgba(0, 0, 0, 0.05), inset 1px 1px 0px rgba(0, 0, 0, 0.05);
-}
-::-webkit-scrollbar-track {
-  background: #1f1f1f;
-}
-::-webkit-scrollbar-button {
-    width: 0;
-    height: 0;
-    display: none;
-}
-::-webkit-scrollbar-corner {
-    background-color: transparent;
-}
-
-@font-face {
-  font-family: 'FiraSans';
-  src:  url('./assets/fonts/FiraSans-Regular.ttf');
-  font-weight: 400;
-}
-
-@font-face {
-  font-family: 'FiraSans';
-  src:  url('./assets/fonts/FiraSans-Bold.ttf');
-  font-weight: 500;
-}
-
-@font-face {
-  font-family: 'FiraSans';
-  src:  url('./assets/fonts/FiraSans-Light.ttf');
-  font-weight: 300;
+.settings-button {
+  position: fixed;
+  right: 10px;
+  bottom: 30px;
+  z-index: 10000;
 }
 </style>

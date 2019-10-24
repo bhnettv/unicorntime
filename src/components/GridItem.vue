@@ -48,6 +48,7 @@ export default {
   height: 259px;
   display: inline-block;
   cursor: pointer;
+  text-align: center;
 
   img {
     width: 175px;
