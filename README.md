@@ -5,7 +5,7 @@
 Mocked API Version: [Release](https://github.com/kono0514/unicorntime/releases/tag/mocked)  
 Server API Version: [Latest](https://github.com/kono0514/unicorntime/releases/latest)
 
-![Screenshot](docs/screenshot.png)
+![Screenshot](docs/unicorntime.gif)
 
 ## Notes
 

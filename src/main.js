@@ -53,7 +53,7 @@ const player = async (src) => {
   }
 
   if (exists !== false) {
-    let uniOptions = ['-user-agent', 'SEI-RTSP', '-rtsp-transport', 'udp'];
+    let uniOptions = ['-user-agent', 'SEI-RTSP', '-rtsp-transport', 'udp', '--demuxer-lavf-o', 'max_delay=0'];
     if (process.env.VUE_APP_API_CLIENT !== 'server') {
       uniOptions = [];
     }
