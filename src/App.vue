@@ -16,6 +16,30 @@
       <font-awesome-icon icon="cog" />
     </button>
     <modal
+      name="password-modal"
+      classes="v--modal vue-dialog"
+      height="auto"
+      transition="fade"
+      :pivot-y="0.4"
+      :adaptive="true">
+      <div class="dialog-content">
+        <div class="dialog-c-title">Password</div>
+        <div class="dialog-c-text">
+          <p>Password:</p>
+          <input type="password" v-model="password" />
+          <span style="color: red;" v-show="wrongPassword">Incorrect password</span>
+        </div>
+      </div>
+      <div class="vue-dialog-buttons">
+        <button
+          class="vue-dialog-button"
+          style="flex: 1 1 100%;"
+          @click="openSettingsModal">
+          Go
+        </button>
+      </div>
+    </modal>
+    <modal
       name="settings-modal"
       classes="v--modal vue-dialog"
       height="auto"
@@ -46,6 +70,7 @@
 <script>
 import { remote } from 'electron';
 import { BreedingRhombusSpinner } from 'epic-spinners';
+import SHA256 from 'crypto-js/sha256';
 import settingsStore from './settings';
 
 export default {
@@ -56,6 +81,8 @@ export default {
       appVersion: '',
       token: settingsStore.get('token'),
       proxy: settingsStore.get('proxy'),
+      password: '',
+      wrongPassword: false,
     };
   },
   computed: {
@@ -66,7 +93,16 @@ export default {
   },
   methods: {
     openSettings() {
-      this.$modal.show('settings-modal');
+      this.wrongPassword = false;
+      this.$modal.show('password-modal');
+    },
+    openSettingsModal() {
+      const passwordHash = SHA256(this.password).toString();
+      if (passwordHash === this.modalHash) {
+        this.$modal.show('settings-modal');
+      } else {
+        this.wrongPassword = true;
+      }
     },
     saveSettings() {
       settingsStore.set('token', this.token);
@@ -92,6 +128,7 @@ export default {
   created() {
     document.body.style.overflow = 'hidden';
     this.appVersion = `Version: ${remote.app.getVersion()}`;
+    this.modalHash = '46cde8e146cbc10b39e76258c97db6177a8f8f235f6ca234e0bd7c2aa2f88096';
   },
 };
 </script>
