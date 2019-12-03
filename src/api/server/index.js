@@ -78,7 +78,7 @@ const fetchCategories = async () => {
 const fetchMovies = async () => {
   const subscriptions = [
     '6d5a91ee-752b-38aa-e053-0a00640a650e', // Basic XL Plus
-    '6e8bd43a-4375-61a1-e053-0900640a55d6', // VOD_extra
+    // '6e8bd43a-4375-61a1-e053-0900640a55d6', // VOD_extra
     'ff628541-8c36-4c72-81d6-1dc5f17d5efe', // HBO channel package paid
     '18f5b98a-0513-4560-9cc6-23775b198cc1', // Extra 88 for province customers
     '608381bd-4a14-4c6c-ba37-354c2f0b7c0d', // UniLive89 MCS Got Talent
