@@ -166,11 +166,7 @@ export default {
       return null;
     },
     title() {
-      if (this.isSingleEpisodeItem) {
-        return this.item.movie.name;
-      }
-
-      return this.selectedEpisode.title;
+      return this.item.movie.name;
     },
     year() {
       return this.item.movie.year;
