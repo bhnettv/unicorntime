@@ -1,37 +1,49 @@
-* {
-  font-family: FiraSans;
-  font-weight: 400;
+@import "~bulma/sass/utilities/_all";
+
+$notification-radius: 0;
+$notification-padding: 0;
+
+@import "~bulma";
+@import "~buefy/src/scss/buefy";
+
+.notices {
+  padding: 0;
 }
 
 html, body {
+  background: transparent;
+  font-family: FiraSans;
+  font-weight: 400;
   margin: 0;
   padding: 0;
+  overflow: visible;
 }
 
 body {
   background: #1f1f1f;
   user-select: none;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   color: hsl(210, 29%, 24%);
 }
 
-.button {
+.uni-button {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 8px 30px;
   color: rgb(80, 80, 80);
   background: #B0B0B0;
   background-image: linear-gradient(to bottom, #B0B0B0, #F2F2F2);
   box-shadow: 1px 1px 20px 0px #000000;
   text-shadow: 1px 1px 20px #000000;
   border: solid #CFCFCF 1px;
-  border-radius: 0px;
   outline: none;
   text-decoration: none;
   cursor: pointer;
   font-size: 24px;
+  border-radius: 100px;
+  padding: 10px;
+  font-size: 20px;
+  font-weight: 100;
 
   &:hover {
     background: #D03434;
@@ -50,13 +62,6 @@ body {
       background-image: linear-gradient(to bottom, #1E62D0, #3D94F6);
     }
   }
-
-  &.fab {
-    border-radius: 100px;
-    padding: 10px;
-    font-size: 20px;
-    font-weight: 100;
-  }
 }
 
 @keyframes myfirst {
@@ -73,13 +78,13 @@ body {
   color: #ffffff;
   background: linear-gradient(45deg, #537b46, #509dde);
 
-  .content {
+  .vod-content {
     padding: 20px 250px;
     background: #00000075;
     backdrop-filter: blur(10px);
   }
 
-  .background {
+  .vod-bg {
     position: fixed;
     left: 0;
     right: 0;
@@ -91,23 +96,23 @@ body {
     animation-play-state: paused;
   }
 
-  .col {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    text-align: left;
-    align-items: flex-start;
-  }
-
   .poster-container {
     display: flex;
     flex-direction: column;
     align-items: center;
 
+    img.uni-poster {
+      margin-bottom: 12px;
+    }
+
     .rating {
       display: flex;
       align-items: center;
-      margin-top: 12px;
+      margin-bottom: 6px;
+
+      .provider {
+        margin-bottom: 3px;
+      }
 
       p {
         margin: 0 5px;
@@ -118,50 +123,12 @@ body {
   }
 
   .info {
-    margin-left: 30px;
-
-    h1 {
-      font-size: 60px;
-      font-weight: 300;
-      margin: 0;
-      padding: 0;
-    }
-  }
-
-  .options {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
-
-    > span {
-      margin-right: 8px;
-    }
-  }
-
-  .v-select {
-    padding-right: 30px;
-
-    &.source-select {
-      flex: 1;
-      padding-right: 0;
-    }
-
-    .vs__dropdown-toggle {
-      border: 1px solid #9b9b9b;
-    }
-
-    .vs__selected {
-      color: #ffffff;
-    }
-
-    .vs__clear, .vs__open-indicator {
-      fill: #e6e6e6;
-    }
+    margin-left: 20px;
   }
 
   .back-button {
     position: absolute;
-    left: -120px;
+    left: 120px;
     font-size: 30px!important;
     padding: 20px!important;
   }
@@ -192,19 +159,19 @@ background: #1f1f1f;
 }
 
 @font-face {
-font-family: 'FiraSans';
-src:  url('~@/assets/fonts/FiraSans-Regular.ttf');
-font-weight: 400;
+  font-family: 'FiraSans';
+  src:  url('~@/assets/fonts/FiraSans-Regular.ttf');
+  font-weight: 400;
 }
 
 @font-face {
-font-family: 'FiraSans';
-src:  url('~@/assets/fonts/FiraSans-Bold.ttf');
-font-weight: 500;
+  font-family: 'FiraSans';
+  src:  url('~@/assets/fonts/FiraSans-Bold.ttf');
+  font-weight: 500;
 }
 
 @font-face {
-font-family: 'FiraSans';
-src:  url('~@/assets/fonts/FiraSans-Light.ttf');
-font-weight: 300;
+  font-family: 'FiraSans';
+  src:  url('~@/assets/fonts/FiraSans-Light.ttf');
+  font-weight: 300;
 }

@@ -9,8 +9,6 @@ import PortalVue from 'portal-vue';
 import VueSidebarMenu from 'vue-sidebar-menu';
 import 'vue-sidebar-menu/dist/vue-sidebar-menu.css';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import vSelect from 'vue-select';
-import 'vue-select/dist/vue-select.css';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import {
   faCaretRight,
@@ -18,6 +16,8 @@ import {
   faCog,
   faStar,
 } from '@fortawesome/free-solid-svg-icons';
+import Buefy from 'buefy';
+import './assets/global.scss';
 
 import App from './App.vue';
 import router from './router';
@@ -35,7 +35,10 @@ Vue.use(VueAxios, axios);
 Vue.use(VueSidebarMenu);
 Vue.use(PortalVue);
 Vue.use(VModal);
-Vue.component('v-select', vSelect);
+Vue.use(Buefy, {
+  defaultIconPack: 'fas',
+  defaultIconComponent: 'font-awesome-icon',
+});
 
 library.add(faCaretRight);
 library.add(faArrowLeft);
