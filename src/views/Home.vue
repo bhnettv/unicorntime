@@ -1,5 +1,5 @@
 <template>
-  <main>
+  <section>
     <sidebar-menu
       :menu="categoryCatalogue"
       :showChild="false"
@@ -13,7 +13,7 @@
     <div class="right-side">
       <router-view />
     </div>
-  </main>
+  </section>
 </template>
 
 <script>
@@ -28,14 +28,18 @@ export default {
 </script>
 
 <style lang="scss">
-.v-sidebar-menu .vsm--link {
-  text-align: left;
-  text-transform: uppercase;
-  padding-left: 30px;
-}
+.v-sidebar-menu {
+  z-index: auto;
 
-.vsm--link_exact-active .vsm--title {
-  font-weight: 500;
+  .vsm--link {
+    text-align: left;
+    text-transform: uppercase;
+    padding-left: 30px;
+  }
+
+  .vsm--link_exact-active .vsm--title {
+    font-weight: 500;
+  }
 }
 
 .right-side {

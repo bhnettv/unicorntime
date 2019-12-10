@@ -1,6 +1,8 @@
 <template>
   <div class="grid-item">
-    <img :src="imageUrl" />
+    <div class="img-container">
+      <img :src="imageUrl" />
+    </div>
 
     <div class="overlay">
       <h4>{{ title }}</h4>
@@ -49,11 +51,20 @@ export default {
   display: inline-block;
   cursor: pointer;
   text-align: center;
+  border-radius: 16px;
 
-  img {
+  .img-container {
     width: 175px;
     height: 259px;
+    overflow: hidden;
     border-radius: 16px;
+
+    img {
+      width: 175px;
+      height: 259px;
+      transition: transform .3s;
+      transform: scale(1.04);
+    }
   }
 
   .overlay {
@@ -62,9 +73,9 @@ export default {
     right: 0;
     top: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.85);
+    background: rgba(0, 0, 0, 0.65);
     border-radius: 16px;
-    box-shadow: 0 0 35px #46a1ff;
+    box-shadow: 0 0 35px 8px #4dafff;
     opacity: 0;
 
     display: flex;
@@ -72,6 +83,8 @@ export default {
     justify-content: center;
     color: #ffffff;
     padding: 8px;
+
+    transition: opacity .3s;
 
     h4 {
       font-size: 18px;
@@ -81,6 +94,9 @@ export default {
   }
 
   &:hover {
+    img {
+      transform: scale(1.16);
+    }
     .overlay {
       opacity: 1;
     }

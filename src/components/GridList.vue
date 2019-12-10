@@ -1,6 +1,8 @@
 <template>
   <div class="grid-page">
-    <h2 class="category-title">{{ category.title }}</h2>
+    <h3 class="subtitle has-text-white is-3">
+      {{ category.title }}
+    </h3>
     <transition-group
       name="staggered-fade"
       tag="div"
@@ -47,7 +49,9 @@ export default {
       items: [],
       lazyItems: [],
       page: 1,
+      perPage: 50,
       category: {},
+      initialDataFetched: false,
     };
   },
   computed: mapState([
@@ -57,8 +61,9 @@ export default {
     beforeEnter: (el) => {
       el.style.opacity = 0;
     },
-    enter: (el, done) => {
-      const delay = el.dataset.index * 50;
+    enter(el, done) {
+      const itemsPerPage = this.lazyItems.length >= this.perPage ? this.perPage : this.lazyItems.length;
+      const delay = (el.dataset.index - this.lazyItems.length + itemsPerPage) * 50;
       setTimeout(() => {
         Velocity(
           el,
@@ -79,11 +84,16 @@ export default {
       }
     },
     infiniteHandler($state) {
-      if (this.items.length === 0) {
+      if (!this.initialDataFetched) {
         return;
       }
 
-      const nextSetOfItems = this.items.slice((this.page - 1) * 50, (this.page - 1) * 50 + 50);
+      if (this.items.length === 0) {
+        $state.complete();
+        return;
+      }
+
+      const nextSetOfItems = this.items.slice((this.page - 1) * this.perPage, (this.page - 1) * this.perPage + this.perPage);
       if (nextSetOfItems.length) {
         this.page += 1;
         this.lazyItems.push(...nextSetOfItems);
@@ -133,6 +143,9 @@ export default {
       // restore the original order
       variantsArray.sort((a, b) => a.order - b.order);
       this.items = variantsArray;
+
+      this.initialDataFetched = true;
+
       if (this.$refs.infiniteLoading) {
         this.$refs.infiniteLoading.attemptLoad();
       }
@@ -145,6 +158,8 @@ export default {
 
       this.items = Object.values(svodMap);
 
+      this.initialDataFetched = true;
+
       if (this.$refs.infiniteLoading) {
         this.$refs.infiniteLoading.attemptLoad();
       }
@@ -153,6 +168,7 @@ export default {
       this.items = [];
       this.lazyItems = [];
       this.page = 1;
+      this.initialDataFetched = false;
       if (this.$refs.infiniteLoading) {
         this.$refs.infiniteLoading.stateChanger.reset();
       }
@@ -211,15 +227,7 @@ export default {
 .grid-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, 175px);
-  grid-gap: 1rem;
+  grid-gap: 2.5rem 1rem;
   justify-content: space-between;
-}
-
-.category-title {
-  font-family: FiraSans;
-  font-weight: 400;
-  font-size: 30px;
-  text-align: left;
-  color: #ffffff;
 }
 </style>

@@ -11,6 +11,16 @@ export default {
         rating: '',
         background: '',
       },
+      omdbInfo: {
+        imdbRating: null,
+        metaRating: null,
+        rtRating: null,
+        runtime: null,
+        pg: null,
+      },
+      omdbInfoFetching: false,
+      playing: false,
+      trailerPlaying: false,
     };
   },
   computed: {
@@ -26,9 +36,30 @@ export default {
     },
   },
   methods: {
-    play() {
+    async play() {
       if (this.selectedVariant && this.selectedVariantResource) {
-        this.$player(this.selectedVariantResource.src);
+        this.playing = true;
+        const player = await this.$player(this.title, this.selectedVariantResource.src);
+        if (player) {
+          player.on('exit', () => {
+            this.playing = false;
+          });
+        }
+      } else {
+        this.playing = false;
+      }
+    },
+    async playTrailer() {
+      if (this.promo) {
+        this.trailerPlaying = true;
+        const player = await this.$player(`${this.title} TRAILER`, this.promo);
+        if (player) {
+          player.on('exit', () => {
+            this.trailerPlaying = false;
+          });
+        }
+      } else {
+        this.trailerPlaying = false;
       }
     },
     back() {
@@ -58,6 +89,37 @@ export default {
           img.src = imgSource;
         }
       }
+    },
+    async fetchOMDB(name, year) {
+      this.omdbInfoFetching = true;
+      const url = `http://omdbapi.com/?apikey=722079ef&t=${name}&y=${year}`;
+      const response = await this.axios.get(url);
+
+      if (response.data.Response === 'True') {
+        if ('Ratings' in response.data) {
+          response.data.Ratings.forEach((rating) => {
+            if (rating.Source === 'Internet Movie Database') {
+              this.omdbInfo.imdbRating = rating.Value;
+            }
+
+            if (rating.Source === 'Rotten Tomatoes') {
+              this.omdbInfo.rtRating = rating.Value;
+            }
+
+            if (rating.Source === 'Metacritic') {
+              this.omdbInfo.metaRating = rating.Value;
+            }
+          });
+        }
+        if ('Rated' in response.data) {
+          this.omdbInfo.pg = response.data.Rated;
+        }
+        if ('Runtime' in response.data) {
+          this.omdbInfo.runtime = response.data.Runtime;
+        }
+      }
+
+      this.omdbInfoFetching = false;
     },
   },
 };

@@ -1,9 +1,9 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from '../views/Home.vue';
+import VOD from '../views/VOD.vue';
+import SVOD from '../views/SVOD.vue';
 import GridList from '../components/GridList.vue';
-import VodDetails from '../components/VodDetails.vue';
-import SVodDetails from '../components/SVodDetails.vue';
 
 Vue.use(VueRouter);
 
@@ -25,13 +25,13 @@ const routes = [
     path: '/vod/:id',
     name: 'vod',
     props: true,
-    component: VodDetails,
+    component: VOD,
   },
   {
     path: '/svod/:id',
     name: 'svod',
     props: true,
-    component: SVodDetails,
+    component: SVOD,
   },
   {
     path: '*',

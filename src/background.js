@@ -1,6 +1,11 @@
 /* global __static */
 import path from 'path';
-import { app, protocol, Menu, BrowserWindow } from 'electron';
+import {
+  app,
+  protocol,
+  Menu,
+  BrowserWindow,
+} from 'electron';
 import { autoUpdater } from 'electron-updater';
 import {
   createProtocol,
@@ -95,25 +100,22 @@ app.on('ready', async () => {
 });
 
 autoUpdater.on('checking-for-update', () => {
-  win.webContents.send('Checking for update...');
+  win.webContents.send('update', 'Checking for update...', 0);
 });
 autoUpdater.on('update-available', () => {
-  win.webContents.send('Update available.');
+  win.webContents.send('update', 'Update available. Starting...', 0);
 });
 autoUpdater.on('update-not-available', () => {
-  win.webContents.send('Update not available.');
+  win.webContents.send('update', 'Up to date.', 1);
 });
 autoUpdater.on('error', (err) => {
-  win.webContents.send(`Error in auto-updater. ${err}`);
+  win.webContents.send('update', `Update error. ${err}`, 2);
 });
 autoUpdater.on('download-progress', (progressObj) => {
-  let logMessage = `Download speed: ${progressObj.bytesPerSecond}`;
-  logMessage = `${logMessage} - Downloaded ${progressObj.percent}%`;
-  logMessage = `${logMessage} (${progressObj.transferred}/${progressObj.total})`;
-  win.webContents.send(logMessage);
+  win.webContents.send('update', `Downloading... ${progressObj.percent}%`, 0);
 });
 autoUpdater.on('update-downloaded', () => {
-  win.webContents.send('Update downloaded');
+  win.webContents.send('update', 'Update downloaded. Restart now.', 1);
 });
 
 // Exit cleanly on request from parent process in development mode.

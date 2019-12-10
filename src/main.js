@@ -15,7 +15,10 @@ import {
   faArrowLeft,
   faCog,
   faStar,
+  faSyncAlt,
+  faPlay,
 } from '@fortawesome/free-solid-svg-icons';
+import { faImdb } from '@fortawesome/free-brands-svg-icons';
 import Buefy from 'buefy';
 import './assets/global.scss';
 
@@ -44,9 +47,12 @@ library.add(faCaretRight);
 library.add(faArrowLeft);
 library.add(faCog);
 library.add(faStar);
+library.add(faSyncAlt);
+library.add(faPlay);
+library.add(faImdb);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
-const player = async (src) => {
+const player = async (name, src) => {
   let exists = false;
   try {
     exists = await commandExists('mpv');
@@ -56,7 +62,16 @@ const player = async (src) => {
   }
 
   if (exists !== false) {
-    let uniOptions = ['-user-agent', 'SEI-RTSP', '-rtsp-transport', 'udp', '--demuxer-lavf-o', 'max_delay=0'];
+    let uniOptions = [
+      '-user-agent',
+      'SEI-RTSP',
+      '-rtsp-transport',
+      'udp',
+      '--demuxer-lavf-o',
+      'max_delay=0',
+      '--force-media-title',
+      name,
+    ];
     if (process.env.VUE_APP_API_CLIENT !== 'server') {
       uniOptions = [];
     }
@@ -65,7 +80,11 @@ const player = async (src) => {
       stdio: 'ignore',
     });
     child.unref();
+
+    return child;
   }
+
+  return null;
 };
 
 const playerPlugin = {
