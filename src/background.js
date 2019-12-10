@@ -49,7 +49,9 @@ function createWindow() {
     createProtocol('app');
     // Load the index.html when not in development
     win.loadURL('app://./index.html');
-    autoUpdater.checkForUpdatesAndNotify();
+    setTimeout(() => {
+      autoUpdater.checkForUpdatesAndNotify();
+    }, 6000);
   }
 
   win.on('resize', () => {
