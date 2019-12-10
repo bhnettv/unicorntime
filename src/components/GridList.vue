@@ -153,10 +153,22 @@ export default {
     async fetchSVodList() {
       const svodList = await client.fetchSvodList(this.category.id);
 
-      const svodMap = Object.assign({}, ...svodList.map(item => ({ [item.id]: { id: item.id, movie: item, type: 'svod' } })));
+      const svodMap = Object.assign({}, ...svodList.map((item, index) => ({
+        [item.id]: {
+          id: item.id,
+          movie: item,
+          type: 'svod',
+          order: index,
+        },
+      })));
+
       this.$store.dispatch('ADD_MOVIES', svodMap);
 
-      this.items = Object.values(svodMap);
+      const svodItems = Object.values(svodMap);
+      // restore the original order
+      svodItems.sort((a, b) => a.order - b.order);
+
+      this.items = svodItems;
 
       this.initialDataFetched = true;
 
