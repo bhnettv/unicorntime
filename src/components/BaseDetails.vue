@@ -39,7 +39,7 @@ export default {
     async play() {
       if (this.selectedVariant && this.selectedVariantResource) {
         this.playing = true;
-        const player = await this.$player(this.title, this.selectedVariantResource.src);
+        const player = await this.$player(this.mediaTitle, this.selectedVariantResource.src);
         if (player) {
           player.on('exit', () => {
             this.playing = false;
@@ -52,7 +52,7 @@ export default {
     async playTrailer() {
       if (this.promo) {
         this.trailerPlaying = true;
-        const player = await this.$player(`${this.title} TRAILER`, this.promo);
+        const player = await this.$player(`${this.mediaTitle} TRAILER`, this.promo);
         if (player) {
           player.on('exit', () => {
             this.trailerPlaying = false;

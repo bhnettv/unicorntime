@@ -114,6 +114,9 @@ export default {
     title() {
       return this.item.movie.title;
     },
+    mediaTitle() {
+      return this.item.movie.title;
+    },
     year() {
       return this.item.movie.details.year;
     },

@@ -168,6 +168,9 @@ export default {
     title() {
       return this.item.movie.name;
     },
+    mediaTitle() {
+      return this.selectedEpisode ? this.selectedEpisode.title : this.title;
+    },
     year() {
       return this.item.movie.year;
     },
