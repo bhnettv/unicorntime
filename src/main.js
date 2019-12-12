@@ -2,8 +2,6 @@ import Vue from 'vue';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import axiosRetry from 'axios-retry';
-import { spawn } from 'child_process';
-import commandExists from 'command-exists';
 import VModal from 'vue-js-modal';
 import PortalVue from 'portal-vue';
 import VueSidebarMenu from 'vue-sidebar-menu';
@@ -17,6 +15,7 @@ import {
   faStar,
   faSyncAlt,
   faPlay,
+  faCheckCircle,
 } from '@fortawesome/free-solid-svg-icons';
 import { faImdb } from '@fortawesome/free-brands-svg-icons';
 import Buefy from 'buefy';
@@ -25,6 +24,7 @@ import './assets/global.scss';
 import App from './App.vue';
 import router from './router';
 import store from './store';
+import PlayerPlugin from './player';
 
 Vue.config.productionTip = false;
 
@@ -50,50 +50,10 @@ library.add(faStar);
 library.add(faSyncAlt);
 library.add(faPlay);
 library.add(faImdb);
+library.add(faCheckCircle);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
-const player = async (name, src) => {
-  let exists = false;
-  try {
-    exists = await commandExists('mpv');
-  } catch (err) {
-    // eslint-disable-next-line no-alert
-    alert('MPV not found');
-  }
-
-  if (exists !== false) {
-    let uniOptions = [
-      '-user-agent',
-      'SEI-RTSP',
-      '-rtsp-transport',
-      'udp',
-      '--demuxer-lavf-o',
-      'max_delay=0',
-      '--force-media-title',
-      name,
-    ];
-    if (process.env.VUE_APP_API_CLIENT !== 'server') {
-      uniOptions = [];
-    }
-    const child = spawn('mpv', [...uniOptions, src], {
-      detached: true,
-      stdio: 'ignore',
-    });
-    child.unref();
-
-    return child;
-  }
-
-  return null;
-};
-
-const playerPlugin = {
-  install() {
-    Vue.player = player;
-    Vue.prototype.$player = player;
-  },
-};
-Vue.use(playerPlugin);
+Vue.use(PlayerPlugin);
 
 new Vue({
   router,

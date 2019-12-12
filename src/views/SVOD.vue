@@ -93,8 +93,12 @@
               </nav>
 
               <div class="buttons">
-                <b-button size="is-large" type="is-link" icon-left="play" @click="play" :loading="playing">Watch</b-button>
-                <b-button size="is-large" type="is-primary"
+                <b-button size="is-medium" type="is-link"
+                  icon-left="play"
+                  v-show="canResume"
+                  @click="play(true)" :loading="playing">Resume {{ secondsToHHMM(resumePosition) }}</b-button>
+                <b-button size="is-medium" type="is-link" icon-left="play" @click="play()" :loading="playing">Watch</b-button>
+                <b-button size="is-medium" type="is-primary"
                   icon-left="play"
                   v-show="isSingleEpisodeItem && promo"
                   @click="playTrailer" :loading="trailerPlaying">Trailer</b-button>
@@ -114,6 +118,12 @@
               v-for="episode in episodes"
               @click="episodeSelected(episode)"
               :class="{ active: selectedEpisode === episode }">
+              <b-icon
+                pack="fas"
+                icon="check-circle"
+                style="font-size: 12px; vertical-align: middle; margin-right: 6px;"
+                v-show="checkWatched(episode.id)">
+              </b-icon>
               {{ episode.title }}
             </li>
           </ul>

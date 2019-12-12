@@ -2,6 +2,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import client from 'api-client';
+import createPersistedState from 'vuex-persistedstate';
 
 Vue.use(Vuex);
 
@@ -38,6 +39,8 @@ export default new Vuex.Store({
     movieCatalogue: {},
     movieCatalogueFetched: false,
     movies: {},
+    moviePositions: {}, // key: contentInfoId, value: video position
+    watchedContentInfoIds: [],
   },
   getters: {
     // eslint-disable-next-line arrow-body-style
@@ -64,6 +67,14 @@ export default new Vuex.Store({
     addMovie(state, data) {
       state.movies[data.id] = data;
     },
+    setMoviePosition(state, data) {
+      Vue.set(state.moviePositions, data.contentInfoId, data.position);
+    },
+    setMovieWatched(state, contentInfoId) {
+      if (state.watchedContentInfoIds.indexOf(contentInfoId) === -1) {
+        state.watchedContentInfoIds = [...state.watchedContentInfoIds, contentInfoId];
+      }
+    },
   },
   actions: {
     async GET_CATEGORY_CATALOGUE({ commit }) {
@@ -85,7 +96,19 @@ export default new Vuex.Store({
         commit('addMovie', payload[item]);
       });
     },
+    SET_MOVIE_POSITION({ commit }, payload) {
+      commit('setMoviePosition', payload);
+    },
+    SET_MOVIE_WATCHED({ commit }, contentInfoId) {
+      commit('setMovieWatched', contentInfoId);
+    },
   },
   modules: {
   },
+  plugins: [createPersistedState({
+    reducer: state => ({
+      moviePositions: state.moviePositions,
+      watchedContentInfoIds: state.watchedContentInfoIds,
+    }),
+  })],
 });

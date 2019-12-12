@@ -34,16 +34,38 @@ export default {
     backgroundFade() {
       return this.movieDBInfo.background === '' ? 'paused' : 'running';
     },
+    resumePosition() {
+      return this.$store.state.moviePositions[this.selectedVariant.contentInfoId];
+    },
+    canResume() {
+      // Can resume if user watched more than 2 minutes or less than 5 minutes before the end
+      if (this.selectedVariantResource && this.resumePosition && this.resumePosition >= 120
+          && this.resumePosition < this.selectedVariantResource.duration / 1000 - (5 * 60)) {
+        return true;
+      }
+      return false;
+    },
   },
   methods: {
-    async play() {
+    async play(resume = false) {
       if (this.selectedVariant && this.selectedVariantResource) {
         this.playing = true;
-        const player = await this.$player(this.mediaTitle, this.selectedVariantResource.src);
-        if (player) {
+
+        if (!resume) {
+          this.$store.dispatch('SET_MOVIE_POSITION', {
+            contentInfoId: this.selectedVariant.contentInfoId,
+            position: 0,
+          });
+        }
+
+        try {
+          const player = await this.$player(this.mediaTitle, this.selectedVariantResource.src,
+            this.selectedVariantResource.duration / 1000, this.resumePosition, this.selectedVariant.contentInfoId);
           player.on('exit', () => {
             this.playing = false;
           });
+        } catch (err) {
+          console.log(err);
         }
       } else {
         this.playing = false;
@@ -52,11 +74,14 @@ export default {
     async playTrailer() {
       if (this.promo) {
         this.trailerPlaying = true;
-        const player = await this.$player(`${this.mediaTitle} TRAILER`, this.promo);
-        if (player) {
+
+        try {
+          const player = await this.$player(`${this.mediaTitle} TRAILER`, this.promo);
           player.on('exit', () => {
             this.trailerPlaying = false;
           });
+        } catch (err) {
+          console.log(err);
         }
       } else {
         this.trailerPlaying = false;
@@ -120,6 +145,15 @@ export default {
       }
 
       this.omdbInfoFetching = false;
+    },
+    secondsToHHMM(seconds) {
+      if (typeof seconds === 'number') {
+        return new Date(seconds * 1000).toISOString().substr(11, 5);
+      }
+      return '';
+    },
+    checkWatched(contentInfoId) {
+      return this.$store.state.watchedContentInfoIds.indexOf(contentInfoId) > -1;
     },
   },
 };

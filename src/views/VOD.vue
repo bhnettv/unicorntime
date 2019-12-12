@@ -78,9 +78,13 @@
           </nav>
 
           <div class="buttons">
-            <b-button size="is-large" type="is-link" icon-left="play" @click="play" :loading="playing">Watch</b-button>
+            <b-button size="is-medium" type="is-link"
+              icon-left="play"
+              v-show="canResume"
+              @click="play(true)" :loading="playing">Resume {{ secondsToHHMM(resumePosition) }}</b-button>
+            <b-button size="is-medium" type="is-link" icon-left="play" @click="play()" :loading="playing">Watch</b-button>
             <b-button
-              size="is-large" type="is-primary"
+              size="is-medium" type="is-primary"
               icon-left="play" v-show="promo" @click="playTrailer"
               :loading="trailerPlaying">Trailer</b-button>
           </div>
