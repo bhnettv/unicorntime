@@ -5,6 +5,7 @@ import {
   protocol,
   Menu,
   BrowserWindow,
+  session,
 } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import {
@@ -85,6 +86,10 @@ app.on('activate', () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
+  session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
+    details.requestHeaders['User-Agent'] = 'Beenius Android HTTP Client';
+    callback({ cancel: false, requestHeaders: details.requestHeaders });
+  });
   if (isDevelopment && !process.env.IS_TEST) {
     // Install Vue Devtools
     // Devtools extensions are broken in Electron 6.0.0 and greater
