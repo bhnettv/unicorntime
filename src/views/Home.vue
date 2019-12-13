@@ -1,7 +1,7 @@
 <template>
   <section>
     <sidebar-menu
-      :menu="categoryCatalogue"
+      :menu="categoryCatalogueWithSearch"
       :showChild="false"
       :collapsed="false"
       :showOneChild="true"
@@ -21,9 +21,18 @@ import { mapState } from 'vuex';
 
 export default {
   name: 'home',
-  computed: mapState([
-    'categoryCatalogue',
-  ]),
+  computed: mapState({
+    categoryCatalogueWithSearch(state) {
+      return [
+        {
+          id: 'search',
+          href: '/search',
+          title: 'Search',
+        },
+        ...state.categoryCatalogue,
+      ];
+    },
+  }),
 };
 </script>
 

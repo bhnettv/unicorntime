@@ -207,7 +207,7 @@ export default {
   },
   watch: {
     async selectedEpisode(episode) {
-      this.selectedEpisodeMedia = await client.fetchMedia([episode.id]);
+      this.selectedEpisodeMedia = await client.fetchMedia(episode.id);
       this.selectedEpisodeMediaFetching = false;
       [this.selectedVariant] = this.selectedEpisodeMedia;
     },

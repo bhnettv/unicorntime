@@ -172,6 +172,25 @@ const fetchSvodItemEpisodes = async (svodContentInfoIds) => {
   return responseList;
 };
 
+// const fetchMovieInfoByContentInfoId = async (contentInfoId) => {
+//   const url = `http://10.200.0.41/restapi/rest/1/content/info/${contentInfoId}?language=mn`;
+//   const response = await requestGet(url);
+// };
+
+const performSearch = async (searchText) => {
+  const url = `http://10.200.0.41/restapi/rest/1/453737/search?query=${encodeURIComponent(searchText)}`;
+  const response = await requestGet(url);
+
+  // Search returns both "INFO" (Movie/Svod) and "PROGRAM" (TV program)
+  const onlyMovies = response.data.filter(item => item.type === 'INFO');
+
+  onlyMovies.forEach((item) => {
+    item.contentInfo.poster = `http://10.200.0.41${item.contentInfo.poster}`;
+  });
+
+  return onlyMovies;
+};
+
 export default {
   translateUrl,
   fetchCategories,
@@ -180,4 +199,5 @@ export default {
   fetchMedia,
   fetchSvodList,
   fetchSvodItemEpisodes,
+  performSearch,
 };

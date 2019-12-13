@@ -75,7 +75,6 @@ export default {
     bottom: 0;
     background: rgba(0, 0, 0, 0.65);
     border-radius: 16px;
-    box-shadow: 0 0 35px 8px #4dafff;
     opacity: 0;
 
     display: flex;
@@ -97,6 +96,13 @@ export default {
     img {
       transform: scale(1.16);
     }
+    .overlay {
+      box-shadow: 0 0 35px 8px #4dafff;
+      opacity: 1;
+    }
+  }
+
+  &.inverted {
     .overlay {
       opacity: 1;
     }

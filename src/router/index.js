@@ -1,9 +1,10 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import Home from '../views/Home.vue';
-import VOD from '../views/VOD.vue';
-import SVOD from '../views/SVOD.vue';
-import GridList from '../components/GridList.vue';
+import Home from '@/views/Home.vue';
+import VOD from '@/views/VOD.vue';
+import SVOD from '@/views/SVOD.vue';
+import Search from '@/views/Search.vue';
+import GridList from '@/components/GridList.vue';
 
 Vue.use(VueRouter);
 
@@ -18,6 +19,11 @@ const routes = [
         name: 'list',
         props: true,
         component: GridList,
+      },
+      {
+        path: 'search',
+        name: 'search',
+        component: Search,
       },
     ],
   },
