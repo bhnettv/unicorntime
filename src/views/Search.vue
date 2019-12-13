@@ -74,7 +74,7 @@ export default {
             id: item.contentInfo.id,
             movie: item.contentInfo,
             variants: [],
-            type: 'dynamic',
+            type: 'vod',
           }));
         } finally {
           this.loading = false;
