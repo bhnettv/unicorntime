@@ -1,4 +1,4 @@
-import axios from 'axios';
+import Vue from 'vue';
 import OAuth from 'oauth-1.0a';
 import crypto from 'crypto';
 import settingsStore from '../../settings';
@@ -54,7 +54,7 @@ const translateUrl = (url) => {
   return url;
 };
 
-const requestGet = url => axios.get(translateUrl(url), {
+const requestGet = url => Vue.axios.get(translateUrl(url), {
   headers: {
     Accept: 'application/vnd.beenius+json;version=9',
     ...generateOauthHeader(url, 'GET'),

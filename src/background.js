@@ -86,6 +86,12 @@ app.on('activate', () => {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', async () => {
+  // API requests can be made through SOCKS5 proxy (dante-server)
+  // But, this is useless for now since MPV doesn't support
+  // playing RTSP stream via SOCKS5 proxy anyway
+  // session.defaultSession.setProxy({
+  //   pacScript: `file://${path.join(__static, 'pac.pac')}`,
+  // });
   session.defaultSession.webRequest.onBeforeSendHeaders((details, callback) => {
     details.requestHeaders['User-Agent'] = 'Beenius Android HTTP Client';
     callback({ cancel: false, requestHeaders: details.requestHeaders });
