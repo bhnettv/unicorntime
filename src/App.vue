@@ -105,7 +105,7 @@ export default {
       if (status !== 0) {
         setTimeout(() => {
           this.updateNotificationVisible = false;
-        }, 15000);
+        }, 5000);
       }
     });
   },
