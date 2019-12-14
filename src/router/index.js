@@ -4,6 +4,7 @@ import Home from '@/views/Home.vue';
 import VOD from '@/views/VOD.vue';
 import SVOD from '@/views/SVOD.vue';
 import Search from '@/views/Search.vue';
+import Channels from '@/views/Channels.vue';
 import GridList from '@/components/GridList.vue';
 
 Vue.use(VueRouter);
@@ -24,6 +25,11 @@ const routes = [
         path: 'search',
         name: 'search',
         component: Search,
+      },
+      {
+        path: 'channels',
+        name: 'channels',
+        component: Channels,
       },
     ],
   },

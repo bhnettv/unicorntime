@@ -28,6 +28,27 @@ export default {
           id: 'search',
           href: '/search',
           title: 'Search',
+          icon: {
+            element: 'font-awesome-icon',
+            attributes: {
+              icon: 'search',
+            },
+          },
+        },
+        {
+          id: 'channels',
+          href: '/channels',
+          title: 'LIVE TV',
+          icon: {
+            element: 'font-awesome-icon',
+            attributes: {
+              icon: 'tv',
+            },
+          },
+        },
+        {
+          header: true,
+          title: 'Categories',
         },
         ...state.categoryCatalogue,
       ];
@@ -48,6 +69,12 @@ export default {
 
   .vsm--link_exact-active .vsm--title {
     font-weight: 500;
+  }
+
+  .vsm--link_level-1.vsm--link_exact-active .vsm--icon,
+  .vsm--link_level-1 .vsm--icon {
+    background-color: transparent;
+    width: 23px;
   }
 }
 

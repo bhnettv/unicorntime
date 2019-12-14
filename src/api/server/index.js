@@ -191,6 +191,24 @@ const performSearch = async (searchText) => {
   return onlyMovies;
 };
 
+const getLiveChannels = async () => {
+  const url = 'http://10.200.0.41/restapi/rest/1/channels?page_size=500&channel_type=all&language=mn';
+  const response = await requestGet(url);
+
+  const responseList = response.data.list;
+
+  responseList.forEach((item) => {
+    if (item.icon) {
+      item.icon = `http://10.200.0.41${item.icon}`;
+    }
+    if (item.poster) {
+      item.poster = `http://10.200.0.41${item.poster}`;
+    }
+  });
+
+  return responseList;
+};
+
 export default {
   translateUrl,
   fetchCategories,
@@ -200,4 +218,5 @@ export default {
   fetchSvodList,
   fetchSvodItemEpisodes,
   performSearch,
+  getLiveChannels,
 };

@@ -7,6 +7,7 @@
       <b-input
         placeholder="Search..."
         expanded
+        icon="search"
         ref="searchInput"
         @keyup.native.enter="search"
         v-model="searchText"></b-input>
