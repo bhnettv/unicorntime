@@ -6,29 +6,13 @@ import VModal from 'vue-js-modal';
 import PortalVue from 'portal-vue';
 import VueSidebarMenu from 'vue-sidebar-menu';
 import 'vue-sidebar-menu/dist/vue-sidebar-menu.css';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import {
-  faCaretRight,
-  faArrowLeft,
-  faCog,
-  faStar,
-  faSyncAlt,
-  faPlay,
-  faCheckCircle,
-  faSearch,
-  faTv,
-  faBookmark,
-  faCaretDown,
-  faCaretUp,
-} from '@fortawesome/free-solid-svg-icons';
-import { faImdb } from '@fortawesome/free-brands-svg-icons';
 import Buefy from 'buefy';
 import './assets/global.scss';
 
 import App from './App.vue';
 import router from './router';
 import store from './store';
+import Icons from './icons';
 import PlayerPlugin from './player';
 
 Vue.config.productionTip = false;
@@ -47,21 +31,7 @@ Vue.use(Buefy, {
   defaultIconPack: 'fas',
   defaultIconComponent: 'font-awesome-icon',
 });
-
-library.add(faCaretRight);
-library.add(faArrowLeft);
-library.add(faCog);
-library.add(faStar);
-library.add(faSyncAlt);
-library.add(faPlay);
-library.add(faImdb);
-library.add(faCheckCircle);
-library.add(faSearch);
-library.add(faTv);
-library.add(faBookmark);
-library.add(faCaretDown);
-library.add(faCaretUp);
-Vue.component('font-awesome-icon', FontAwesomeIcon);
+Vue.component('font-awesome-icon', Icons);
 
 Vue.use(PlayerPlugin);
 
