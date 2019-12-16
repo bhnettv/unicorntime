@@ -18,6 +18,9 @@ import {
   faCheckCircle,
   faSearch,
   faTv,
+  faBookmark,
+  faCaretDown,
+  faCaretUp,
 } from '@fortawesome/free-solid-svg-icons';
 import { faImdb } from '@fortawesome/free-brands-svg-icons';
 import Buefy from 'buefy';
@@ -55,6 +58,9 @@ library.add(faImdb);
 library.add(faCheckCircle);
 library.add(faSearch);
 library.add(faTv);
+library.add(faBookmark);
+library.add(faCaretDown);
+library.add(faCaretUp);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.use(PlayerPlugin);

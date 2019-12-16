@@ -17,23 +17,73 @@
         </div>
       </div>
     </div>
+
     <div class="channel-container">
+      <b-collapse :open.sync="showBookmarks">
+        <b-button
+          type="is-dark"
+          :icon-left="!props.open ? 'caret-down' : 'caret-up'"
+          style="margin-bottom: 20px;"
+          slot="trigger"
+          slot-scope="props">
+          {{ !props.open ? 'Show Bookmarks' : 'Hide Bookmarks' }}
+        </b-button>
+        <p class="has-text-light" v-show="bookmarkedChannels.length === 0">No bookmarks found</p>
+        <div
+          v-for="bookmarkedItem in bookmarkedChannels"
+          :key="`bookmarkedChannel-${bookmarkedItem.id}`"
+          @click="onItemClick(bookmarkedItem)"
+          class="channel-item">
+          <p class="is-size-5">· {{ bookmarkedItem.number }}</p>
+          <img :src="bookmarkedItem.icon ? bookmarkedItem.icon : bookmarkedItem.poster" />
+          <p class="is-size-5">{{ bookmarkedItem.name }}</p>
+          <div style="display: flex; align-items: center; margin-left: auto;">
+            <b-icon
+              pack="fas"
+              icon="sync-alt"
+              custom-class="fa-spin"
+              style="margin-right: 15px;"
+              v-show="bookmarkedItem.playing">
+            </b-icon>
+            <b-tooltip label="Bookmark"
+              position="is-left"
+              type="is-light">
+              <b-button
+                :type="isChannelBookmarked(bookmarkedItem) ? 'is-warning' : 'is-white'"
+                outlined
+                icon-right="bookmark"
+                @click.stop="bookmark(bookmarkedItem)" />
+            </b-tooltip>
+          </div>
+        </div>
+        <hr/>
+      </b-collapse>
       <div
-        v-bind:key="item.id"
         v-for="item in lazyItems"
-        :item="item"
+        v-bind:key="item.id"
         @click="onItemClick(item)"
         class="channel-item">
         <p class="is-size-5">· {{ item.number }}</p>
         <img :src="item.icon ? item.icon : item.poster" />
         <p class="is-size-5">{{ item.name }}</p>
-        <b-icon
-          pack="fas"
-          icon="sync-alt"
-          style="margin-left: auto;"
-          custom-class="fa-spin"
-          v-show="item.playing">
-        </b-icon>
+        <div style="display: flex; align-items: center; margin-left: auto;">
+          <b-icon
+            pack="fas"
+            icon="sync-alt"
+            custom-class="fa-spin"
+            style="margin-right: 15px;"
+            v-show="item.playing">
+          </b-icon>
+          <b-tooltip label="Bookmark"
+            position="is-left"
+            type="is-light">
+            <b-button
+            :type="isChannelBookmarked(item) ? 'is-warning' : 'is-white'"
+            outlined
+            icon-right="bookmark"
+            @click.stop="bookmark(item)" />
+          </b-tooltip>
+        </div>
       </div>
     </div>
 
@@ -53,6 +103,7 @@
 
 <script>
 import Vue from 'vue';
+import { mapState, mapGetters } from 'vuex';
 import client from 'api-client';
 import InfiniteLoading from 'vue-infinite-loading';
 import { BreedingRhombusSpinner } from 'epic-spinners';
@@ -69,6 +120,24 @@ export default {
       initialDataFetched: false,
       searchText: '',
     };
+  },
+  computed: {
+    showBookmarks: {
+      get() {
+        return this.$store.state.showBookmarks;
+      },
+      set(value) {
+        console.log(value);
+        this.$store.dispatch('SET_SHOW_BOOKMARKS', value);
+        console.log(this.$store.state.showBookmarks);
+      },
+    },
+    ...mapState([
+      'bookmarkedChannels',
+    ]),
+    ...mapGetters([
+      'isChannelBookmarked',
+    ]),
   },
   watch: {
     searchText(newVal) {
@@ -114,7 +183,7 @@ export default {
       }
     },
     async onItemClick(item) {
-      if (item.streams.length > 0) {
+      if (item.streams.length > 0 && item.playing !== true) {
         let streamSrc = item.streams[0].src.replace('igmp://', '');
         streamSrc = `http://192.168.150.150:4022/udp/${streamSrc}`;
         Vue.set(item, 'playing', true);
@@ -127,6 +196,9 @@ export default {
           console.log(err);
         }
       }
+    },
+    bookmark(item) {
+      this.$store.dispatch('TOGGLE_BOOKMARK_CHANNEL', item);
     },
   },
   mounted() {

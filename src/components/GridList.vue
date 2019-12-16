@@ -233,7 +233,7 @@ export default {
 
 <style lang="scss">
 .grid-page {
-  margin: 15px 30px;
+  padding: 15px 30px;
 }
 
 .grid-container {

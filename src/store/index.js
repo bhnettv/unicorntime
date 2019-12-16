@@ -41,12 +41,16 @@ export default new Vuex.Store({
     movies: {},
     moviePositions: {}, // key: contentInfoId, value: video position
     watchedContentInfoIds: [],
+    bookmarkedChannels: [],
+    showBookmarks: false,
   },
   getters: {
     // eslint-disable-next-line arrow-body-style
     getCategory: state => (id) => {
       return state.categoryCatalogueRaw.find(category => category.id.toString() === id.toString());
     },
+    getBookmarkedChannelIndex: state => channel => state.bookmarkedChannels.findIndex(item => item.id === channel.id),
+    isChannelBookmarked: (state, getters) => channel => getters.getBookmarkedChannelIndex(channel) > -1,
   },
   mutations: {
     updateCategoryCatalogueRaw(state, data) {
@@ -75,6 +79,16 @@ export default new Vuex.Store({
         state.watchedContentInfoIds = [...state.watchedContentInfoIds, contentInfoId];
       }
     },
+    toggleBookmarkChannel(state, { channel, insert = false }) {
+      if (insert) {
+        state.bookmarkedChannels = [...state.bookmarkedChannels, channel];
+      } else {
+        state.bookmarkedChannels.splice(channel, 1);
+      }
+    },
+    setShowBookmarks(state, value) {
+      state.showBookmarks = value;
+    },
   },
   actions: {
     async GET_CATEGORY_CATALOGUE({ commit }) {
@@ -102,6 +116,17 @@ export default new Vuex.Store({
     SET_MOVIE_WATCHED({ commit }, contentInfoId) {
       commit('setMovieWatched', contentInfoId);
     },
+    TOGGLE_BOOKMARK_CHANNEL({ commit, getters }, channel) {
+      const channelIndex = getters.getBookmarkedChannelIndex(channel);
+      if (channelIndex === -1) {
+        commit('toggleBookmarkChannel', { channel, insert: true });
+      } else {
+        commit('toggleBookmarkChannel', { channel: channelIndex, insert: false });
+      }
+    },
+    SET_SHOW_BOOKMARKS({ commit }, value) {
+      commit('setShowBookmarks', value);
+    },
   },
   modules: {
   },
@@ -109,6 +134,8 @@ export default new Vuex.Store({
     reducer: state => ({
       moviePositions: state.moviePositions,
       watchedContentInfoIds: state.watchedContentInfoIds,
+      bookmarkedChannels: state.bookmarkedChannels,
+      showBookmarks: state.showBookmarks,
     }),
   })],
 });

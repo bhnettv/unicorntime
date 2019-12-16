@@ -68,7 +68,7 @@ const fetchCategories = async () => {
   let response = await requestGet(url);
   responseList = [...responseList, ...response.data.list];
 
-  url = 'http://10.200.0.41/restapi/rest/svod/1/453737/category/list?language=mn&subscriberId=403977000';
+  url = 'http://10.200.0.41/restapi/rest/svod/1/453737/category/list?language=mn';
   response = await requestGet(url);
   responseList = [...responseList, ...response.data.data];
 
